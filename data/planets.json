@@ -1,0 +1,86 @@
+{
+    "planets": [
+      {
+        "name": "Mercure",
+        "temperature": "167°C to -183°C",
+        "isGasGiant": false,
+        "hasMoons": false,
+        "orbitalSpeed": "47.87 km/s",
+        "rotationSpeed": "10.89 hours",
+        "size": "4,879 km"
+      },
+      {
+        "name": "Vénus",
+        "temperature": "462°C",
+        "isGasGiant": false,
+        "hasMoons": false,
+        "orbitalSpeed": "35.02 km/s",
+        "rotationSpeed": "243 days",
+        "size": "12,104 km"
+      },
+      {
+        "name": "Terre",
+        "temperature": "15°C (average)",
+        "isGasGiant": false,
+        "hasMoons": true,
+        "orbitalSpeed": "29.78 km/s",
+        "rotationSpeed": "24 hours",
+        "size": "12,742 km"
+      },
+      {
+        "name": "Mars",
+        "temperature": "-63°C",
+        "isGasGiant": false,
+        "hasMoons": true,
+        "orbitalSpeed": "24.077 km/s",
+        "rotationSpeed": "24.6 hours",
+        "size": "6,779 km"
+      },
+      {
+        "name": "Jupiter",
+        "temperature": "-108°C",
+        "isGasGiant": true,
+        "hasMoons": true,
+        "orbitalSpeed": "13.07 km/s",
+        "rotationSpeed": "9.9 hours",
+        "size": "139,820 km"
+      },
+      {
+        "name": "Saturne",
+        "temperature": "-139°C",
+        "isGasGiant": true,
+        "hasMoons": true,
+        "orbitalSpeed": "9.69 km/s",
+        "rotationSpeed": "10.7 hours",
+        "size": "116,460 km"
+      },
+      {
+        "name": "Uranus",
+        "temperature": "-224°C",
+        "isGasGiant": true,
+        "hasMoons": true,
+        "orbitalSpeed": "6.81 km/s",
+        "rotationSpeed": "17.2 hours",
+        "size": "50,724 km"
+      },
+      {
+        "name": "Neptune",
+        "temperature": "-218°C",
+        "isGasGiant": true,
+        "hasMoons": true,
+        "orbitalSpeed": "5.43 km/s",
+        "rotationSpeed": "16.1 hours",
+        "size": "49,244 km"
+      },
+      {
+        "name": "Soleil",
+        "temperature": "5,500°C",
+        "isGasGiant": true,
+        "hasMoons": false,
+        "orbitalSpeed": "220 km/s",
+        "rotationSpeed": "25 days at the equator",
+        "size": "1,392,700 km"
+      }
+    ]
+  }
+  
