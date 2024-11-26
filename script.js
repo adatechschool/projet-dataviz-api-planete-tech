@@ -13,7 +13,7 @@ async function fetchPlanetData() {
 
         // Extraire et trier les informations des lunes pour chaque planète
         const planetsWithMoons = planets.map(function (planet) {
-            let sortedMoons = [];
+            let sortedMoons = []; // initier un tableau vide
 
             // Vérifier si la planète a des lunes
             if (planet.moons) {
@@ -35,8 +35,7 @@ async function fetchPlanetData() {
                 id: planet.id,
                 name: planet.englishName,
                 moons: sortedMoons,
-                gravity: planet.gravity || 'Unknown',
-                //discoveryDate: planet.discoveryDate || 'Unknown',
+                gravity: planet.gravity,
             };
         });
 
@@ -50,7 +49,6 @@ async function fetchPlanetData() {
             console.log(`Planète: ${planet.name}`);
             console.log(`  Lunes: ${planet.moons.join(', ') || 'Aucune'}`);
             console.log(`  Gravité: ${planet.gravity}`);
-            //console.log(`  Date de découverte: ${planet.discoveryDate}`);
         });
 
     } catch (error) {
