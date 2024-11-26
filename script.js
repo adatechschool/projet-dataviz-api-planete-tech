@@ -1,50 +1,61 @@
-// Fonction asynchrone pour récupérer les données depuis planets.json
+const apiUrl = 'https://api.le-systeme-solaire.net/rest/bodies/';
+
 async function fetchPlanetData() {
     try {
-      // Utiliser fetch pour obtenir le fichier JSON
-      const response = await fetch('data/planets.json');
-      
-      // Vérifier si la réponse est correcte (code 200)
-      if (!response.ok) {
-        throw new Error('Erreur de chargement du fichier JSON');
-      }
-  
-      // Convertir la réponse en JSON
-      const data = await response.json();
-  
-      // Afficher les données dans la console
-      console.log(data);
-  
-      // Appeler une fonction pour afficher ces données sur le site
-      displayPlanetData(data.planets);
-  
+        // Récupérer les données de l'API
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+
+        // Filtrer uniquement les planètes
+        const planets = data.bodies.filter(function (body) {
+            return body.isPlanet;
+        });
+
+        // Extraire et trier les informations des lunes pour chaque planète
+        const planetsWithMoons = planets.map(function (planet) {
+            let sortedMoons = [];
+
+            // Vérifier si la planète a des lunes
+            if (planet.moons) {
+                // Extraire les noms des lunes
+                sortedMoons = planet.moons.map(function (moon) {
+                    return moon.moon;
+                });
+
+                // Trier les noms des lunes par ordre alphabétique
+                sortedMoons.sort(function (a, b) {
+                    return a.localeCompare(b);
+                });
+            }
+
+            console.log(planet)
+
+            // Retourner un objet avec toutes les informations
+            return {
+                id: planet.id,
+                name: planet.englishName,
+                moons: sortedMoons,
+                gravity: planet.gravity || 'Unknown',
+                //discoveryDate: planet.discoveryDate || 'Unknown',
+            };
+        });
+
+        // Trier les planètes par nom
+        const sortedByName = planetsWithMoons.sort(function (a, b) {
+            return a.name.localeCompare(b.name);
+        });
+
+        // Afficher les résultats triés
+        sortedByName.forEach(function (planet) {
+            console.log(`Planète: ${planet.name}`);
+            console.log(`  Lunes: ${planet.moons.join(', ') || 'Aucune'}`);
+            console.log(`  Gravité: ${planet.gravity}`);
+            //console.log(`  Date de découverte: ${planet.discoveryDate}`);
+        });
+
     } catch (error) {
-      console.error('Erreur:', error);
+        console.error('Error fetching data:', error);
     }
-  }
-  
-  // Exemple de fonction pour afficher les données sur la page
-  function displayPlanetData(planets) {
-    const container = document.getElementById('planet-container');
-  
-    planets.forEach(planet => {
-      const planetElement = document.createElement('div');
-      planetElement.classList.add('planet');
-      
-      planetElement.innerHTML = `
-        <h2>${planet.name}</h2>
-        <p>Température: ${planet.temperature}</p>
-        <p>Est-ce une géante gazeuse? ${planet.isGasGiant ? 'Oui' : 'Non'}</p>
-        <p>Moons: ${planet.hasMoons ? 'Oui' : 'Non'}</p>
-        <p>Vitesse orbitale: ${planet.orbitalSpeed}</p>
-        <p>Vitesse de rotation: ${planet.rotationSpeed}</p>
-        <p>Taille: ${planet.size}</p>
-      `;
-      
-      container.appendChild(planetElement);
-    });
-  }
-  
-  // Appeler la fonction pour récupérer et afficher les données
-  fetchPlanetData();
-  
+}
+// Appeler la fonction
+fetchPlanetData();
