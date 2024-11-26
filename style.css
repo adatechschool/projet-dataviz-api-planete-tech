@@ -41,3 +41,53 @@ div {
     width: 100%;
     height: 100%;
 }
+
+#sun {
+    background-image: url(images/Sun.png);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 15em; /* Ajustez la taille pour un effet réaliste */
+    height: 15em;
+    margin-top: -7.5em; /* Centre parfaitement */
+    margin-left: -7.5em; /* Centre parfaitement */
+    border-radius: 50%; /* Forme sphérique */
+    background-color: #FB7209;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    /* Effet lumineux */
+    box-shadow: 
+        0 0 100px rgba(255, 204, 102, 0.8), 
+        0 0 200px rgba(255, 140, 0, 0.5), 
+        0 0 300px rgba(255, 69, 0, 0.3);
+
+    /* Animation de pulsation */
+    animation: pulsate 4s infinite ease-in-out;
+}
+
+/* Animation pour donner un effet vivant */
+@keyframes pulsate {
+    0% {
+        box-shadow: 
+            0 0 80px rgba(255, 204, 102, 0.7), 
+            0 0 150px rgba(255, 140, 0, 0.4), 
+            0 0 200px rgba(255, 69, 0, 0.2);
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 
+            0 0 120px rgba(255, 204, 102, 1), 
+            0 0 250px rgba(255, 140, 0, 0.7), 
+            0 0 350px rgba(255, 69, 0, 0.5);
+        transform: scale(1.05);
+    }
+    100% {
+        box-shadow: 
+            0 0 80px rgba(255, 204, 102, 0.7), 
+            0 0 150px rgba(255, 140, 0, 0.4), 
+            0 0 200px rgba(255, 69, 0, 0.2);
+        transform: scale(1);
+    }
+}
+
