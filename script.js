@@ -14,26 +14,17 @@ async function solarSystem() {
             let gravite = data.bodies[i].gravity
 
         // Vérifie si le corps est une planète, s'il a des lunes et si la gravité est définie
-            if (data.bodies[i].isPlanet && lunes && gravite){
-                // Récupère uniquement les noms des lunes à partir des objets lune
-                let moonNames; 
 
-                // Limiter les lunes à 10 pour Saturne, Uranus et Jupiter
-                if (["saturne", "uranus", "jupiter"].includes(nom)) {
-                    // Limiter les lunes à 10 pour Saturne
-                    moonNames = lunes.slice(0, 10).map(lune => lune.moon);
-                } else {
-                    // Récupère toutes les lunes pour les autres planètes
-                    moonNames = lunes.map(lune => lune.moon);
-                }
-
-                // Trie les noms des lunes par ordre alphabétique
-                moonNames.sort();
+                if (data.bodies[i].isPlanet && gravite) {
+                    // Si 'moons' est null ou vide, afficher "Pas de lunes"
+                    let moonNames = (lunes && Array.isArray(lunes) && lunes.length > 0)
+                        ? lunes.slice(0, 10).map(lune => lune.moon).join(', ')
+                        : 'Aucun satellite';
 
                 // Ajoute les informations dans le tableau sous forme d'objet
                 isMoon.push({
                     Nom: nom,
-                    Lune: moonNames.join(', '),
+                    Lune: moonNames,
                     Gravité: gravite
                 })
             }   
