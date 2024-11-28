@@ -14,7 +14,6 @@ async function solarSystem() {
             let gravite = data.bodies[i].gravity
 
         // Vérifie si le corps est une planète, s'il a des lunes et si la gravité est définie
-
                 if (data.bodies[i].isPlanet && gravite) {
                     // Si 'moons' est null ou vide, afficher "Pas de lunes"
                     let moonNames = (lunes && Array.isArray(lunes) && lunes.length > 0)
@@ -32,6 +31,5 @@ async function solarSystem() {
     // Trie les planètes par ordre alphabétique en fonction de leur nom
     isMoon.sort((a, b) => a.Nom.localeCompare(b.Nom));
     console.log(isMoon)
-   
 }
 solarSystem()

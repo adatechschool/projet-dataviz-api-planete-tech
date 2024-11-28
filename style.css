@@ -43,7 +43,7 @@ div {
 }
 
 #sun {
-    background-image: url(images/Sun.png);
+    background-image: url(images/Sun.png); /* Utilisez une image de texture réaliste */
     position: absolute;
     top: 50%;
     left: 50%;
@@ -90,4 +90,5 @@ div {
         transform: scale(1);
     }
 }
+
 
