@@ -1,59 +1,46 @@
-const apiUrl = 'https://api.le-systeme-solaire.net/rest/bodies/';
+async function solarSystem() {
+    // Requête de l'API
+    const response = await fetch('https://api.le-systeme-solaire.net/rest/bodies/')
+    // Attend la réponse et convertit les données en format JSON
+    const data = await response.json()
 
-async function fetchPlanetData() {
-    try {
-        // Récupérer les données de l'API
-        const response = await fetch(apiUrl);
-        const data = await response.json();
+    let isMoon = []
 
-        // Filtrer uniquement les planètes
-        const planets = data.bodies.filter(function (body) {
-            return body.isPlanet;
-        });
+    // Parcourt tous les corps célestes disponibles dans les données récupérées
+    for (let i = 0; i < data.bodies.length; i++) {
+        // Récupère le nom, les lunes et la gravité du corps céleste actuel
+            let nom = data.bodies[i].id
+            let lunes = data.bodies[i].moons
+            let gravite = data.bodies[i].gravity
 
-        // Extraire et trier les informations des lunes pour chaque planète
-        const planetsWithMoons = planets.map(function (planet) {
-            let sortedMoons = []; // initier un tableau vide
+        // Vérifie si le corps est une planète, s'il a des lunes et si la gravité est définie
+            if (data.bodies[i].isPlanet && lunes && gravite){
+                // Récupère uniquement les noms des lunes à partir des objets lune
+                let moonNames; 
 
-            // Vérifier si la planète a des lunes
-            if (planet.moons) {
-                // Extraire les noms des lunes
-                sortedMoons = planet.moons.map(function (moon) {
-                    return moon.moon;
-                });
+                // Limiter les lunes à 10 pour Saturne, Uranus et Jupiter
+                if (["saturne", "uranus", "jupiter"].includes(nom)) {
+                    // Limiter les lunes à 10 pour Saturne
+                    moonNames = lunes.slice(0, 10).map(lune => lune.moon);
+                } else {
+                    // Récupère toutes les lunes pour les autres planètes
+                    moonNames = lunes.map(lune => lune.moon);
+                }
 
-                // Trier les noms des lunes par ordre alphabétique
-                sortedMoons.sort(function (a, b) {
-                    return a.localeCompare(b);
-                });
-            }
+                // Trie les noms des lunes par ordre alphabétique
+                moonNames.sort();
 
-            console.log(planet)
-
-            // Retourner un objet avec toutes les informations
-            return {
-                id: planet.id,
-                name: planet.englishName,
-                moons: sortedMoons,
-                gravity: planet.gravity,
-            };
-        });
-
-        // Trier les planètes par nom
-        const sortedByName = planetsWithMoons.sort(function (a, b) {
-            return a.name.localeCompare(b.name);
-        });
-
-        // Afficher les résultats triés
-        sortedByName.forEach(function (planet) {
-            console.log(`Planète: ${planet.name}`);
-            console.log(`  Lunes: ${planet.moons.join(', ') || 'Aucune'}`);
-            console.log(`  Gravité: ${planet.gravity}`);
-        });
-
-    } catch (error) {
-        console.error('Error fetching data:', error);
+                // Ajoute les informations dans le tableau sous forme d'objet
+                isMoon.push({
+                    Nom: nom,
+                    Lune: moonNames.join(', '),
+                    Gravité: gravite
+                })
+            }   
     }
+    // Trie les planètes par ordre alphabétique en fonction de leur nom
+    isMoon.sort((a, b) => a.Nom.localeCompare(b.Nom));
+    console.log(isMoon)
+   
 }
-// Appeler la fonction
-fetchPlanetData();
+solarSystem()
