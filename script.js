@@ -5,6 +5,7 @@ async function solarSystem() {
     const data = await response.json()
 
     let isMoon = []
+    const planets = document.getElementById("planet-container");
 
     // Parcourt tous les corps célestes disponibles dans les données récupérées
     for (let i = 0; i < data.bodies.length; i++) {
@@ -30,6 +31,25 @@ async function solarSystem() {
     }
     // Trie les planètes par ordre alphabétique en fonction de leur nom
     isMoon.sort((a, b) => a.Nom.localeCompare(b.Nom));
-    console.log(isMoon)
+    //console.log(isMoon)
+    // Affiche le nom des planètes dans le HTML
+    isMoon.forEach(planet => {
+        const planetDiv = document.createElement("div");
+        planetDiv.textContent = planet.Nom;
+        planetDiv.className = "planet-name"
+        planetDiv.addEventListener("click", () => displayPlanetDetails(planet)) 
+        planets.appendChild(planetDiv)
+        
+    })
+}
+
+// Fonction pour afficher les détails d'une planète
+function displayPlanetDetails(planet){
+    const planetDetail = document.getElementById("planet-detail");
+    planetDetail.innerHTML = `
+    <h2>${planet.Nom}</h2>
+    <p><strong>Satellite : </strong>${planet.Lune}</p>
+    <p><strong>Gravité : </strong>${planet.Gravité}</p>`
 }
 solarSystem()
+

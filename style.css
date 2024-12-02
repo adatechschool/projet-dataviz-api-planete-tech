@@ -1,0 +1,22 @@
+#planet-container div {
+    cursor: pointer;
+    padding: 10px;
+    margin: 5px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    display: inline-block;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+#planet-container div:hover {
+    background-color: #e0f7fa;
+}
+
+#planet-details {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #ffffff;
+    border-radius: 4px;
+}
