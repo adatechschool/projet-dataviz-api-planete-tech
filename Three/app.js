@@ -48,7 +48,7 @@ const sunTexture = textureLoader.load('images/texture_sun.jpg')
 
 // Création du Soleil
 const sunGeometry = new THREE.SphereGeometry(7, 32, 32);
-const sunMaterial = new THREE.MeshBasicMaterial({ map: sunTexture });  // Soleil jaune
+const sunMaterial = new THREE.MeshBasicMaterial({ map: sunTexture });
 const sun = new THREE.Mesh(sunGeometry, sunMaterial);
 scene.add(sun);
 
@@ -85,6 +85,7 @@ planets.forEach(planet => {
     const geometry = new THREE.SphereGeometry(planet.size, 32, 32);
     const material = new THREE.MeshLambertMaterial({ map: planetTextures[planet.name.toLowerCase()] });
     const mesh = new THREE.Mesh(geometry, material);
+    mesh.name = planet.name.toLowerCase();
 
     mesh.position.x = planet.distance;  // Position initiale sur l'orbite
 
@@ -126,7 +127,7 @@ const moon = new THREE.Mesh(moonGeometry, moonMaterial);
 scene.add(moon);
 
 // Placer la Lune autour de la Terre
-const earth = planetMeshes.find(p => p.mesh.material.map === planetTextures.earth);
+const earth = planetMeshes.find(p => p.mesh.material.map === planetTextures.terre);
 if (earth) {
     moon.position.x = earth.mesh.position.x + 2; // La Lune se trouve à 2 unités de la Terre
 }
@@ -153,7 +154,7 @@ function animate() {
     });
 
     // Mouvement de la Lune autour de la Terre
-    const earth = planetMeshes.find(planet => planet.mesh.name === "earth");
+    const earth = planetMeshes.find(planet => planet.mesh.name === "terre");
     if (earth) {
         moon.position.x = earth.mesh.position.x + Math.cos(Date.now() * 0.001 * 0.9) * 2;
         moon.position.z = earth.mesh.position.z + Math.sin(Date.now() * 0.001 * 0.9) * 2;
