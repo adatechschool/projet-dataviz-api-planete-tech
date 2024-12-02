@@ -3,7 +3,7 @@ body {
     margin: 0;
     font-family: 'Arial', sans-serif;
     color: #fff;
-    background: linear-gradient(180deg, #000428, #004e92); /* Gradient spatial */
+    background: linear-gradient(180deg, #000428, #004e92);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -12,7 +12,8 @@ body {
 header {
     text-align: center;
     padding: 20px;
-    background: rgba(0, 0, 0, 0.7);
+   /* background: rgba(0, 0, 0, 0.7);*/
+    background-image: url(images/fond-block.jpg);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
@@ -44,7 +45,8 @@ main {
     position: sticky;
     top: 10px;  
     z-index: 10; 
-    background-color: rgba(0, 0, 0, 0.7);
+    /* background-color: rgba(0, 0, 0, 0.7); */
+    background-image: url(images/fond-block.jpg);
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
@@ -64,6 +66,7 @@ main {
 #planet-container div:hover {
     transform: scale(1.1);
     background-color: rgba(255, 255, 255, 0.2);
+    color: rgb(186, 159, 39);
 }
 
 #planet-detail {
