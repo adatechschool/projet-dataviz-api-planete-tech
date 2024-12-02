@@ -104,7 +104,7 @@ planets.forEach(planet => {
 });
 
 // Ajouter l'anneau de Saturne
-const saturn = planetMeshes.find(p => p.mesh.material.map === planetTextures.saturn);
+const saturn = planetMeshes.find(p => p.mesh.material.map === planetTextures.saturne);
 if (saturn) {
     const ringGeometry = new THREE.RingGeometry(3, 5, 64);
     const ringMaterial = new THREE.MeshBasicMaterial({
