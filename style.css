@@ -1,22 +1,88 @@
+/* Global styles */
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    color: #fff;
+    background: linear-gradient(180deg, #000428, #004e92); /* Gradient spatial */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    text-align: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    color: #f0f0f0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+header p {
+    margin: 10px 0 0;
+    font-size: 1.1rem;
+    color: #ddd;
+}
+
+main {
+    flex: 1;
+    padding: 20px;
+}
+
+#planet-section {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
 #planet-container div {
     cursor: pointer;
     padding: 10px;
     margin: 5px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     display: inline-block;
     border-radius: 4px;
-    transition: background-color 0.3s;
+    transition: transform 0.3s, background-color 0.3s;
 }
 
 #planet-container div:hover {
-    background-color: #e0f7fa;
+    transform: scale(1.1);
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
-#planet-details {
+#planet-detail {
     margin-top: 20px;
     padding: 10px;
-    border: 1px solid #ccc;
-    background-color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.1);
     border-radius: 4px;
+}
+
+#three-section {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#three-container {
+    background-color: rgba(0, 0, 0, 0.8);
+    width: 100%;
+    height: 600px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+}
+
+/* Footer styles */
+footer {
+    text-align: center;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.9);
+    font-size: 0.9rem;
+    color: #ccc;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
 }

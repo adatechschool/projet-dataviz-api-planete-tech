@@ -2,8 +2,17 @@
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 const renderer = new THREE.WebGLRenderer();
-renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
+
+// Utiliser le conteneur pour le canvas
+const container = document.getElementById("three-container")
+renderer.setSize(container.clientWidth, container.clientHeight);
+container.appendChild(renderer.domElement);
+
+window.addEventListener('resize', () => {
+    camera.aspect = container.clientWidth / container.clientHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(container.clientWidth, container.clientHeight);
+});
 
 // Chargement des textures
 const textureLoader = new THREE.TextureLoader();
@@ -20,12 +29,12 @@ scene.add(backgroundSphere); // Ajouter la sphère à la scène
 
 // Chargement des textures des planètes et des anneaux
 const planetTextures = {
-    mercury: textureLoader.load('images/texture_mercury.jpg'),
+    mercure: textureLoader.load('images/texture_mercury.jpg'),
     venus: textureLoader.load('images/texture_venus.jpg'),
-    earth: textureLoader.load('images/texture_earth.jpg'),
+    terre: textureLoader.load('images/texture_earth.jpg'),
     mars: textureLoader.load('images/texture_mars.jpg'),
     jupiter: textureLoader.load('images/texture_jupiter.jpg'),
-    saturn: textureLoader.load('images/texture_saturn.jpg'),
+    saturne: textureLoader.load('images/texture_saturn.jpg'),
     uranus: textureLoader.load('images/texture_uranus.jpg'),
     neptune: textureLoader.load('images/texture_neptune.jpg'),
     moon: textureLoader.load('images/texture_moon.jpg')
@@ -60,12 +69,12 @@ scene.add(directionalLight);
 
 // Liste des planètes avec leurs données et vitesses orbitales approximatives
 const planets = [
-    { name: 'Mercury', size: 0.5, distance: 8, speed: 0.010 },  // Mercure plus rapide
+    { name: 'Mercure', size: 0.5, distance: 8, speed: 0.010 },  // Mercure plus rapide
     { name: 'Venus', size: 0.9, distance: 11, speed: 0.005 },
-    { name: 'Earth', size: 1, distance: 14, speed: 0.002 },
+    { name: 'terre', size: 1, distance: 14, speed: 0.002 },
     { name: 'Mars', size: 0.8, distance: 17, speed: 0.0018 },
     { name: 'Jupiter', size: 3, distance: 22, speed: 0.0013 },
-    { name: 'Saturn', size: 2.5, distance: 28, speed: 0.0009 },
+    { name: 'Saturne', size: 2.5, distance: 28, speed: 0.0009 },
     { name: 'Uranus', size: 2, distance: 35, speed: 0.0007 },
     { name: 'Neptune', size: 2, distance: 42, speed: 0.0005 }  // Neptune plus lent
 ];
@@ -76,6 +85,7 @@ planets.forEach(planet => {
     const geometry = new THREE.SphereGeometry(planet.size, 32, 32);
     const material = new THREE.MeshLambertMaterial({ map: planetTextures[planet.name.toLowerCase()] });
     const mesh = new THREE.Mesh(geometry, material);
+
     mesh.position.x = planet.distance;  // Position initiale sur l'orbite
 
     // Définir un angle initial (aléatoire ou fixe)
@@ -89,6 +99,7 @@ planets.forEach(planet => {
     scene.add(orbit);
 
     scene.add(mesh);
+    planetData[planet.name.toLowerCase()] = mesh;
     planetMeshes.push({ mesh, distance: planet.distance, speed: planet.speed, angle: planet.angle }); // Stocker l'angle initial
 });
 
@@ -125,7 +136,9 @@ function animate() {
     requestAnimationFrame(animate);
 
     // Rotation du Soleil
-    sun.rotation.y += 0.005;
+    if (sun) {
+        sun.rotation.y += 0.005;
+    }
 
     planetMeshes.forEach(planet => {
         // Mettre à jour l'angle de la planète avec sa vitesse spécifique
@@ -140,6 +153,7 @@ function animate() {
     });
 
     // Mouvement de la Lune autour de la Terre
+    const earth = planetMeshes.find(planet => planet.mesh.name === "earth");
     if (earth) {
         moon.position.x = earth.mesh.position.x + Math.cos(Date.now() * 0.001 * 0.9) * 2;
         moon.position.z = earth.mesh.position.z + Math.sin(Date.now() * 0.001 * 0.9) * 2;
