@@ -60,10 +60,10 @@ function displayPlanetDetails(planet){
 // Fonction qui permet de désactiver le suivi
 function stopFollowingPlanet() {
     followingPlanet = null;
-    resetCamera();
+    resetCamera()
 }
 
-solarSystem();
+solarSystem()
 
 document.getElementById("reset-camera").addEventListener("click", stopFollowingPlanet);
 
