@@ -1,7 +1,3 @@
-// Stockage des relations 
-const planetData = {};
-console.log(planetData)
-
 async function solarSystem() {
     // Requête de l'API
     const response = await fetch('https://api.le-systeme-solaire.net/rest/bodies/')
@@ -20,7 +16,7 @@ async function solarSystem() {
 
         // Vérifie si le corps est une planète, s'il a des lunes et si la gravité est définie
             if (data.bodies[i].isPlanet && gravite) {
-                
+
                 // Si 'moons' est null ou vide, afficher "Pas de lunes"
                 let moonNames = (lunes && Array.isArray(lunes) && lunes.length > 0)
                     ? lunes.slice(0, 10).map(lune => lune.moon).join(', ')
@@ -43,14 +39,13 @@ async function solarSystem() {
         const planetDiv = document.createElement("div");
         planetDiv.textContent = planet.Nom;
         planetDiv.className = "planet-name";
-
+    
         planetDiv.addEventListener("click", () => {
-            displayPlanetDetails(planet);
-            moveCameraToPlanet(planet.Nom.toLowerCase());
+            displayPlanetDetails(planet); // Met à jour les détails
+            moveCameraToPlanet(planet.Nom.toLowerCase()); // Déplace la caméra
         });
         planets.appendChild(planetDiv);
-        
-    })
+    });
 }
 
 // Fonction pour afficher les détails d'une planète
@@ -61,38 +56,14 @@ function displayPlanetDetails(planet){
     <p><strong>Satellite : </strong>${planet.Lune}</p>
     <p><strong>Gravité : </strong>${planet.Gravité}</p>`
 }
-solarSystem()
 
-// Fonction permattant de déplacer la caméra
-function moveCameraToPlanet(planetName) {
-    const targetMesh = planetData[planetName.toLowerCase()];
-    if (targetMesh) {
-        const duration = 2000;
-        const startPos = { x: camera.position.x, y: camera.position.y, z: camera.position.z };
-        const endPos = { x: targetMesh.position.x * 1.5, y: targetMesh.position.y + 5, z: targetMesh.position.z * 1.5 };
-
-        let startTime = null;
-
-        function animateCamera(time) {
-            if (!startTime) startTime = time;
-            const elapsedTime = time - startTime;
-
-            const t = Math.min(elapsedTime / duration, 1);
-            camera.position.x = startPos.x + (endPos.x - startPos.x) * t;
-            camera.position.y = startPos.y + (endPos.y - startPos.y) * t;
-            camera.position.z = startPos.z + (endPos.z - startPos.z) * t;
-
-            if (t < 1) {
-                requestAnimationFrame(animateCamera);
-            } else {
-                camera.lookAt(targetMesh.position); // Point de la caméra sur la planète
-                controls.target.copy(targetMesh.position); // Déplace le contrôle de la caméra
-            }
-        }
-
-        requestAnimationFrame(animateCamera);
-    } else {
-        console.warn(`Planète "${planetName}" introuvable dans le 3D.`);
-    }
+// Fonction qui permet de désactiver le suivi
+function stopFollowingPlanet() {
+    followingPlanet = null;
+    resetCamera();
 }
+
+solarSystem();
+
+document.getElementById("reset-camera").addEventListener("click", stopFollowingPlanet);
 

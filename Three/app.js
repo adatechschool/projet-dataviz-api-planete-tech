@@ -1,3 +1,10 @@
+// Stockage des relations 
+const planetData = {};
+console.log(planetData)
+
+// Variable pour suivre une planète
+let followingPlanet = null;
+
 // Scène, caméra et rendu
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -160,9 +167,81 @@ function animate() {
         moon.position.z = earth.mesh.position.z + Math.sin(Date.now() * 0.001 * 0.9) * 2;
     }
 
+    // Suivre une planète si elle est définie
+    if (followingPlanet) {
+        const planetMesh = planetData[followingPlanet];
+        if (planetMesh) {
+            const offset = { x: 5, y: 5, z: 5 };
+            camera.position.set (
+                planetMesh.position.x + offset.x,
+                planetMesh.position.y + offset.y,
+                planetMesh.position.z + offset.z
+            );
+            camera.lookAt(planetMesh.position);
+        }
+    }
     // Rendu de la scène
     renderer.render(scene, camera);
 }
-
 // Appeler la fonction animate pour démarrer l'animation
 animate();
+
+// Fonction permattant de déplacer la caméra
+function moveCameraToPlanet(planetName) {
+    const targetMesh = planetData[planetName.toLowerCase()];
+    if (targetMesh) {
+        followingPlanet = planetName.toLowerCase(); // Active le suivi de la planète
+        const duration = 2000;
+        const startPos = { x: camera.position.x, y: camera.position.y, z: camera.position.z };
+        const endPos = { x: targetMesh.position.x * 1.5, y: targetMesh.position.y + 5, z: targetMesh.position.z * 1.5 };
+
+        let startTime = null;
+
+        function animateCamera(time) {
+            if (!startTime) startTime = time;
+            const elapsedTime = time - startTime;
+
+            const t = Math.min(elapsedTime / duration, 1);
+            camera.position.x = startPos.x + (endPos.x - startPos.x) * t;
+            camera.position.y = startPos.y + (endPos.y - startPos.y) * t;
+            camera.position.z = startPos.z + (endPos.z - startPos.z) * t;
+
+            if (t < 1) {
+                requestAnimationFrame(animateCamera);
+            } else {
+                camera.lookAt(targetMesh.position); // Point de la caméra sur la planète
+                controls.target.copy(targetMesh.position); // Déplace le contrôle de la caméra
+            }
+        }
+
+        requestAnimationFrame(animateCamera);
+    } else {
+        console.warn(`Planète "${planetName}" introuvable dans le 3D.`);
+    }
+}
+
+function resetCamera() {
+    const duration = 2000;
+    const startPos = { x: camera.position.x, y: camera.position.y, z: camera.position.z };
+    const endPos = { x: 0, y: 10, z: 50 }; // Vue par défaut
+    
+    let startTime = null;
+
+    function animateCameraReset(time) {
+        if (!startTime) startTime = time;
+        const elapsedTime = time - startTime;
+
+        const t = Math.min(elapsedTime / duration, 1);
+        camera.position.x = startPos.x + (endPos.x - startPos.x) * t;
+        camera.position.y = startPos.y + (endPos.y - startPos.y) * t;
+        camera.position.z = startPos.z + (endPos.z - startPos.z) * t;
+
+        if (t < 1) {
+            requestAnimationFrame(animateCameraReset);
+        } else {
+            controls.target.set(0, 0, 0); // Recentrer le contrôle
+        }
+    }
+
+    requestAnimationFrame(animateCameraReset);
+}

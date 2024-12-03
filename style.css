@@ -45,8 +45,7 @@ main {
     position: sticky;
     top: 10px;  
     z-index: 10; 
-    /* background-color: rgba(0, 0, 0, 0.7); */
-    background-image: url(images/fond-block.jpg);
+    background-color: rgba(0, 0, 0, 0.7);
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
@@ -83,13 +82,49 @@ main {
 }
 
 #three-container {
-    background-color: rgba(0, 0, 0, 0.8);
+    /* background-color: rgba(0, 0, 0, 0.8); 
     width: 100%;
     height: 600px;
     border: 1px solid rgba(255, 255, 255, 0.2);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-    border-radius: 4px;
+    border-radius: 4px; */
+    position: relative; /* Pour positionner le bouton dans le conteneur */
+    width: 100%; /* Utilisation complète de l'espace */
+    height: 600px; /* Hauteur adaptée pour l'affichage 3D */
+    background: transparent; /* Suppression de tout arrière-plan */
+    overflow: hidden; /* Masque tout contenu débordant */
 }
+
+/* Style général pour les boutons */
+button {
+    background: rgba(0, 0, 0, 0.5); /* Fond transparent */
+    color: #fff; /* Couleur du texte blanche */
+    border: 2px solid rgba(255, 255, 255, 0.7); /* Bordure blanche légèrement transparente */
+    border-radius: 10px; /* Coins arrondis */
+    padding: 10px 20px; /* Espacement interne */
+    font-size: 1rem; /* Taille du texte */
+    cursor: pointer; /* Curseur interactif */
+    transition: all 0.3s ease; /* Transition fluide */
+    position: absolute; /* Positionnement pour flotter */
+    top: 10px; /* Distance du haut */
+    right: 10px; /* Distance de la droite */
+    z-index: 10; /* Toujours visible au-dessus de la 3D */
+}
+
+/* Effet au survol */
+button:hover {
+    background: rgba(255, 255, 255, 0.7); /* Fond blanc */
+    color: #000; /* Texte noir */
+    border-color: rgba(0, 0, 0, 0.7); /* Bordure noire */
+    transform: scale(1.1); /* Légère augmentation de la taille */
+}
+
+/* Bouton actif (clic) */
+button:active {
+    transform: scale(1); /* Réduction de l'effet de hover */
+    opacity: 0.8; /* Légère transparence */
+}
+
 
 /* Footer styles */
 footer {
