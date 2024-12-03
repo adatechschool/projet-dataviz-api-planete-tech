@@ -19,11 +19,12 @@ async function solarSystem() {
             let gravite = data.bodies[i].gravity
 
         // Vérifie si le corps est une planète, s'il a des lunes et si la gravité est définie
-                if (data.bodies[i].isPlanet && gravite) {
-                    // Si 'moons' est null ou vide, afficher "Pas de lunes"
-                    let moonNames = (lunes && Array.isArray(lunes) && lunes.length > 0)
-                        ? lunes.slice(0, 10).map(lune => lune.moon).join(', ')
-                        : 'Aucun satellite';
+            if (data.bodies[i].isPlanet && gravite) {
+                
+                // Si 'moons' est null ou vide, afficher "Pas de lunes"
+                let moonNames = (lunes && Array.isArray(lunes) && lunes.length > 0)
+                    ? lunes.slice(0, 10).map(lune => lune.moon).join(', ')
+                    : 'Aucun satellite';
 
                 // Ajoute les informations dans le tableau sous forme d'objet
                 isMoon.push({
