@@ -240,6 +240,7 @@ function resetCamera() {
             requestAnimationFrame(animateCameraReset);
         } else {
             controls.target.set(0, 0, 0); // Recentrer le contrôle
+            controls.update();
         }
     }
 
