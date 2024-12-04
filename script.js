@@ -43,10 +43,19 @@ async function solarSystem() {
         planetDiv.addEventListener("click", () => {
             displayPlanetDetails(planet); // Met à jour les détails
             moveCameraToPlanet(planet.Nom.toLowerCase()); // Déplace la caméra
+            showPlanetDetailsIn3D(planet); // Affiche les details dans le 3D
+
+            // Scroll jusqu'à la section 3D
+            const threeContainer = document.getElementById("three-container");
+            if (threeContainer) {
+                threeContainer.scrollIntoView({ behavior: "smooth", block: "start"});
+            }
         });
         planets.appendChild(planetDiv);
     });
 }
+
+document.getElementById("planet-detail").classList.add("hidden")
 
 // Fonction pour afficher les détails d'une planète
 function displayPlanetDetails(planet){
@@ -57,10 +66,34 @@ function displayPlanetDetails(planet){
     <p><strong>Gravité : </strong>${planet.Gravité}</p>`
 }
 
+// Fonction pour afficher les details dans le 3D
+function showPlanetDetailsIn3D(planet) {
+    const infoPanel = document.getElementById("planet-info-3d");
+    const nameElement = document.getElementById("planet-name-3d");
+    const detailsElement = document.getElementById("planet-details-3d");
+
+    // MAJ les details
+    nameElement.textContent = planet.Nom;
+    detailsElement.innerHTML = `
+        <strong>Satellite :</strong> ${planet.Lune}<br>
+        <strong>Gravité :</strong> ${planet.Gravité}
+    `;
+
+    // Afficher le panneau
+    infoPanel.classList.remove("hidden");
+}
+
+// Masque le panneau lorsqu'on quitte une planète
+function hidePlanetDetailsIn3D() {
+    const infoPanel = document.getElementById("planet-info-3d");
+    infoPanel.classList.add("hidden");
+}
+
 // Fonction qui permet de désactiver le suivi
 function stopFollowingPlanet() {
     followingPlanet = null;
-    resetCamera()
+    resetCamera();
+    hidePlanetDetailsIn3D();
 }
 
 solarSystem()
